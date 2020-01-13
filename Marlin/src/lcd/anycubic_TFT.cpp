@@ -253,11 +253,11 @@ void AnycubicTFTClass::PausePrint() {
       queue.enqueue_now_P(PSTR("G91")); // relative mode
       queue.enqueue_now_P(PSTR("G1 E-3 F1800")); // retract 3mm
       queue.enqueue_now_P(PSTR("G90")); // absolute mode
-      buzzer.tone(200, 1567);
-      buzzer.tone(200, 1174);
-      buzzer.tone(200, 1567);
-      buzzer.tone(200, 1174);
-      buzzer.tone(2000, 1567);
+      // buzzer.tone(200, 1567);
+      // buzzer.tone(200, 1174);
+      // buzzer.tone(200, 1567);
+      // buzzer.tone(200, 1174);
+      // buzzer.tone(2000, 1567);
       #ifdef ANYCUBIC_TFT_DEBUG
         SERIAL_ECHOLNPGM("DEBUG: Filament runout - Retract, beep and park.");
       #endif
@@ -452,6 +452,9 @@ void AnycubicTFTClass::HandleSpecialMenu()
   } else if (strcmp(SelectedDirectory, "<filamentchange resume>")==0) {
     SERIAL_ECHOLNPGM("Special Menu: FilamentChange Resume");
     FilamentChangeResume();
+  } else if (strcmp(SelectedDirectory, "<init tools>")==0) {
+    SERIAL_ECHOLNPGM("Special Menu: Init Tools");
+    queue.enqueue_now_P(PSTR("G91\nT0\nG1 F300 E70\nG1 F300 E-60\nT1\nG1 F300 E70\nG1 F300 E-60\nT2\nG1 F300 E70\nG1 F300 E-60\nT0\nG90\nG92 E0"));
   } else if (strcmp(SelectedDirectory, "<exit>")==0) {
     SpecialMenu=false;
   }
@@ -499,6 +502,8 @@ void AnycubicTFTClass::Ls()
       ANYCUBIC_SERIAL_PROTOCOLLNPGM("<FilamentChange Pause>");
       ANYCUBIC_SERIAL_PROTOCOLLNPGM("<FilamentChange Resume>");
       ANYCUBIC_SERIAL_PROTOCOLLNPGM("<FilamentChange Resume>");
+      ANYCUBIC_SERIAL_PROTOCOLLNPGM("<Init Tools>");
+      ANYCUBIC_SERIAL_PROTOCOLLNPGM("<Init Tools>");
       break;
 
       default:
