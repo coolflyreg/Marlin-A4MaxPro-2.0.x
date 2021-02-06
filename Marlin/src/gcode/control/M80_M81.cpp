@@ -1,6 +1,6 @@
 /**
  * Marlin 3D Printer Firmware
- * Copyright (c) 2019 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
+ * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
  *
  * Based on Sprinter and grbl.
  * Copyright (c) 2011 Camiel Gubbels / Erik van der Zalm
@@ -31,11 +31,8 @@
   #include "../../lcd/ultralcd.h"
 #endif
 
-#if ENABLED(ANYCUBIC_TFT_MODEL)
-  #include "../../lcd/anycubic_TFT.h"
-#endif
 #if HAS_SUICIDE
-  #include "../../Marlin.h"
+  #include "../../MarlinCore.h"
 #endif
 
 #if ENABLED(PSU_CONTROL)
@@ -47,7 +44,7 @@
   // Could be moved to a feature, but this is all the data
   bool powersupply_on;
 
-  #if HAS_TRINAMIC
+  #if HAS_TRINAMIC_CONFIG
     #include "../../feature/tmc_util.h"
   #endif
 
@@ -83,10 +80,6 @@
       ui.reset_status();
     #endif
 
-    #ifdef ANYCUBIC_TFT_MODEL
-      AnycubicTFT.CommandScan();
-    #endif
-
   }
 
 #endif // ENABLED(PSU_CONTROL)
@@ -118,6 +111,6 @@ void GcodeSuite::M81() {
   #endif
 
   #if HAS_LCD_MENU
-    LCD_MESSAGEPGM_P(PSTR(MACHINE_NAME " " MSG_OFF "."));
+    LCD_MESSAGEPGM_P(PSTR(MACHINE_NAME " " STR_OFF "."));
   #endif
 }
